@@ -50,6 +50,13 @@ class CleanFiles extends Command
             if ($modelName !== 'Model' && $modelName !== 'BaseModel') {
                 // get the model class
                 $modelClass = 'App\\Models\\' . $modelName;
+                
+                // check the class exists
+                if (!class_exists($modelClass)) {
+                    $this->warn('Class ' . $modelClass . ' does not exist');
+                    continue;
+                }
+                
                 // get all the instances of the model
                 $instances = $modelClass::all();
                 // for each instance, get all the fields
